@@ -9,10 +9,10 @@ class CropRenderObjectWidget extends SingleChildRenderObjectWidget {
   final BoxShape shape;
 
   const CropRenderObjectWidget({
-    required Widget child,
-    required this.aspectRatio,
-    required this.shape,
-    Key? key,
+    @required Widget child,
+    @required this.aspectRatio,
+    @required this.shape,
+    Key key,
     this.backgroundColor = Colors.black,
     this.dimColor = const Color.fromRGBO(0, 0, 0, 0.8),
   }) : super(key: key, child: child);
@@ -64,10 +64,10 @@ class CropRenderObjectWidget extends SingleChildRenderObjectWidget {
 
 /// RenderBox for [Crop].
 class RenderCrop extends RenderBox with RenderObjectWithChildMixin<RenderBox> {
-  double? aspectRatio;
-  Color? dimColor;
-  Color? backgroundColor;
-  BoxShape? shape;
+  double aspectRatio;
+  Color dimColor;
+  Color backgroundColor;
+  BoxShape shape;
 
   @override
   bool hitTestSelf(Offset position) => false;
@@ -79,8 +79,8 @@ class RenderCrop extends RenderBox with RenderObjectWithChildMixin<RenderBox> {
 
     if (child != null) {
       final forcedSize =
-          _getSizeToFitByRatio(aspectRatio!, size.width, size.height);
-      child!.layout(BoxConstraints.tight(forcedSize), parentUsesSize: true);
+          _getSizeToFitByRatio(aspectRatio, size.width, size.height);
+      child.layout(BoxConstraints.tight(forcedSize), parentUsesSize: true);
     }
   }
 
@@ -91,7 +91,7 @@ class RenderCrop extends RenderBox with RenderObjectWithChildMixin<RenderBox> {
     );
 
     final forcedSize =
-        _getSizeToFitByRatio(aspectRatio!, size.width, size.height);
+        _getSizeToFitByRatio(aspectRatio, size.width, size.height);
     Rect rect = Rect.fromCenter(
         center: center, width: forcedSize.width, height: forcedSize.height);
 
@@ -115,15 +115,15 @@ class RenderCrop extends RenderBox with RenderObjectWithChildMixin<RenderBox> {
     final bounds = offset & size;
 
     if (backgroundColor != null) {
-      context.canvas.drawRect(bounds, Paint()..color = backgroundColor!);
+      context.canvas.drawRect(bounds, Paint()..color = backgroundColor);
     }
 
     final forcedSize =
-        _getSizeToFitByRatio(aspectRatio!, size.width, size.height);
+        _getSizeToFitByRatio(aspectRatio, size.width, size.height);
 
     if (child != null) {
       final Offset tmp = (size - forcedSize) as Offset;
-      context.paintChild(child!, offset + tmp / 2);
+      context.paintChild(child, offset + tmp / 2);
 
       final clipPath = _getDimClipPath();
 
@@ -133,7 +133,7 @@ class RenderCrop extends RenderBox with RenderObjectWithChildMixin<RenderBox> {
         bounds,
         clipPath,
         (context, offset) {
-          context.canvas.drawRect(bounds, Paint()..color = dimColor!);
+          context.canvas.drawRect(bounds, Paint()..color = dimColor);
         },
       );
     }

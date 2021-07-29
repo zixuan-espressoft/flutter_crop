@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:flutter/foundation.dart';
 
 /// Decomposition of a matrix into [rotation], [scale], [translation].
 class MatrixDecomposition {
@@ -13,8 +14,8 @@ class MatrixDecomposition {
 
   /// Construction
   MatrixDecomposition({
-    required this.scale,
-    required this.rotation,
-    required this.translation,
+    @required this.scale,
+    @required this.rotation,
+    @required this.translation,
   });
 }
